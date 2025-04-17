@@ -11,6 +11,7 @@ services:
       - db-data:/var/lib/postgresql/data
     networks:
       - chat-app
+
   redis:
     container_name: chat_app_redis
     image: redis:7.4.2-alpine
@@ -23,6 +24,14 @@ services:
       - redis-data:/data
     networks:
       - chat-app
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
 
 networks:
   chat-app:
@@ -39,6 +48,3 @@ volumes:
       type: nfs
       o: bind
       device: /home/wqr/chat-app/redis-data
-# FOR LATER WHEN BACKEND WILL BE IN DOCKER
-# networks:
-#   chat-app:
